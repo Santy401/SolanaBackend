@@ -5,102 +5,105 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
-  output   = "../app/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
-  id       Int      @id @default(autoincrement())
-  email    String   @unique
-  password String
+  id          Int    @id @default(autoincrement())
+  email       String @unique
+  name        String
+  password    String
+  typeAccount String
+  country     String
 
-  company  Company?
-  bills    Bill[]
+  company Company?
+  bills   Bill[]
 }
 
 model Company {
-  id                     Int      @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
-  userId                 Int      @unique
-  user                   User     @relation(fields: [userId], references: [id])
+  userId Int  @unique
+  user   User @relation(fields: [userId], references: [id])
 
-  companyName            String
-  accountId              String?
-  commercialName         String?
-  organizationType       OrganizationType
-  vatCondition           VatCondition
+  companyName      String
+  accountId        String?
+  commercialName   String?
+  organizationType OrganizationType
+  vatCondition     VatCondition
 
-  identificationNumber   String
-  verificationDigit      String?
+  identificationNumber String
+  verificationDigit    String?
 
   lastAccountingClose    DateTime?
   economicActivity       String?
-  industryAndCommerceTax Boolean @default(false)
+  industryAndCommerceTax Boolean   @default(false)
 
-  address                String
-  department             String?
-  municipality           String?
-  postalCode             String?
+  address      String
+  department   String?
+  municipality String?
+  postalCode   String?
 
-  phone                  String?
-  email                  String?
+  phone String?
+  email String?
 
-  createdAt              DateTime @default(now())
-  updatedAt              DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Client {
-  id                     Int      @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
-  organizationType       OrganizationType
-  firstLastName          String
-  secondLastName         String?
-  firstName              String
-  otherNames             String?
-  commercialName         String?
-  code                   String?
+  organizationType OrganizationType
+  firstLastName    String
+  secondLastName   String?
+  firstName        String
+  otherNames       String?
+  commercialName   String?
+  code             String?
 
-  identificationType     IdentificationType
-  identificationNumber   String  @unique
+  identificationType   IdentificationType
+  identificationNumber String             @unique
 
-  email                  String?
-  includeCcBcc           Boolean @default(false)
-  phone                  String?
+  email        String?
+  includeCcBcc Boolean @default(false)
+  phone        String?
 
-  country                String
-  department             String?
-  municipality           String?
-  postalCode             String?
-  address                String
+  country      String
+  department   String?
+  municipality String?
+  postalCode   String?
+  address      String
 
-  bills                  Bill[]
+  bills Bill[]
 
-  createdAt              DateTime @default(now())
-  updatedAt              DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Product {
-  id       Int     @id @default(autoincrement())
-  name     String
-  price    Float
+  id    Int    @id @default(autoincrement())
+  name  String
+  price Float
 
-  bills    Bill[]
+  bills Bill[]
 }
 
 model Bill {
-  id        Int @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
   userId    Int
   clientId  Int
   productId Int
 
-  user      User    @relation(fields: [userId], references: [id])
-  client    Client  @relation(fields: [clientId], references: [id])
-  product   Product @relation(fields: [productId], references: [id])
+  user    User    @relation(fields: [userId], references: [id])
+  client  Client  @relation(fields: [clientId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
 
   quantity  Int
   createdAt DateTime @default(now())
