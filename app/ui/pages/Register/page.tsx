@@ -29,25 +29,21 @@ export default function Register() {
         e.preventDefault();
         setError('');
 
-        // Validar emails coincidentes
         if (formData.email !== formData.emailConfirm) {
             setError('Los emails no coinciden');
             return;
         }
 
-        // Validar contraseñas coincidentes
         if (formData.password !== formData.confirmPassword) {
             setError('Las contraseñas no coinciden');
             return;
         }
 
-        // Validar términos aceptados
         if (!formData.acceptTerms || !formData.acceptPrivacy) {
             setError('Debes aceptar los términos y la política de privacidad');
             return;
         }
 
-        // Combinar código de país con número de teléfono
         const fullPhone = `${formData.countryCode}${formData.phone}`;
 
         register({

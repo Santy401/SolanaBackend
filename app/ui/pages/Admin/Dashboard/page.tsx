@@ -39,13 +39,11 @@ const setupSteps = [
 ];
 
 export default function DashboardPage() {
-  // ✅ CORRECTO: Sin 'new' y usando el hook directamente
   const { user, isLoading, isAuthenticated } = useSession();
   
   const pendingSteps = setupSteps.filter(step => !step.completed);
   const completedSteps = setupSteps.filter(step => step.completed);
 
-  // Mostrar loading mientras se verifica la sesión
   if (isLoading) {
     return (
       <div className="p-6 flex items-center justify-center min-h-screen">
@@ -57,7 +55,6 @@ export default function DashboardPage() {
     );
   }
 
-  // Si no está autenticado, podrías redirigir o mostrar un mensaje
   if (!isAuthenticated) {
     return (
       <div className="p-6 text-center">
@@ -72,7 +69,6 @@ export default function DashboardPage() {
 
   return (
     <div className="p-6 space-y-8">
-      {/* Header de Bienvenida */}
       <div className="bg-gradient-to-r from-blue-600 to-blue-800 rounded-2xl p-8 text-white">
         <h1 className="text-3xl font-bold mb-2">
           ¡Te damos la bienvenida, {user?.name || 'Usuario'}!
@@ -82,7 +78,6 @@ export default function DashboardPage() {
         </p>
       </div>
 
-      {/* Pasos Pendientes */}
       {pendingSteps.length > 0 && (
         <div className="space-y-6">
           <div className="flex items-center justify-between">

@@ -19,9 +19,7 @@ export async function GET(request: NextRequest) {
     if (!token) {
       return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
     }
-
-    // Aquí validarías el token y obtendrías los datos del usuario
-    // Esto es un ejemplo:
+    
     const userData: SessionResponse = {
       id: 'user-123',
       email: 'usuario@empresa.com',
