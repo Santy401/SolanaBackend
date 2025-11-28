@@ -37,7 +37,7 @@ export const useRegister = () => {
         localStorage.setItem('auth-token', data.token);
       }
       
-      router.push('/ui/pages/Admin/Dashboard');
+      router.push('/ui/pages/Login');
     },
     onError: (error: Error) => {
       console.error('Registration error:', error);

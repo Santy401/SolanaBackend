@@ -1,76 +1,61 @@
+import bcrypt from 'bcryptjs';
+import { SignJWT } from 'jose';
 import { NextRequest, NextResponse } from 'next/server';
-import { compare } from 'bcryptjs';
-import { cookies } from 'next/headers';
+import { prisma } from '@/interfaces/lib/prisma';
+import { env } from '@/interfaces/lib/env';
 
-// Mock database
-const users = [
-  {
-    id: 'user_123',
-    email: 'demo@empresa.com',
-    password: '$2a$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/eoM3s4.SQ7xk9BfWS',
-    name: 'Usuario Demo',
-    phone: '+573001234567',
-    role: 'admin',
-    onboardingCompleted: false,
-    companyId: 'company_123',
-  }
-];
-
-export async function POST(request: NextRequest) {
+export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
-    const body = await request.json();
-    
-    const { email, password } = body;
+    const { email, password } = await req.json();
 
     if (!email || !password) {
-      return NextResponse.json(
-        { error: 'Email y contraseña son requeridos' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'Email y contraseña son requeridos' }, { status: 400 });
     }
 
-    const user = users.find(u => u.email === email);
+    const user = await prisma.user.findUnique({ where: { email } });
     if (!user) {
-      return NextResponse.json(
-        { error: 'Credenciales inválidas' },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: 'Usuario no encontrado' }, { status: 404 });
     }
 
-    const isPasswordValid = await compare(password, user.password);
+    if (!user.password) {
+      return NextResponse.json({ error: 'Usuario inválido' }, { status: 400 });
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return NextResponse.json(
-        { error: 'Credenciales inválidas' },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: 'Contraseña incorrecta' }, { status: 401 });
     }
 
-    const token = Buffer.from(JSON.stringify({ 
-      userId: user.id, 
-      email: user.email 
-    })).toString('base64');
+    const token = await new SignJWT({ id: user.id, email: user.email})
+      .setProtectedHeader({ alg: 'HS256' })
+      .setExpirationTime('24h')
+      .setIssuedAt()
+      .sign(new TextEncoder().encode(env.JWT_SECRET));
 
-    const cookieStore = await cookies();
-    cookieStore.set('auth-token', token, {
+    const response = NextResponse.json({
+      message: 'Login exitoso',
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name
+      }
+    });
+
+    response.cookies.delete('token');
+    response.cookies.delete('auth-token');
+
+
+    response.cookies.set('auth-token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
       maxAge: 60 * 60 * 24 * 7,
+      path: '/',
     });
 
-    const { password: _, ...userWithoutPassword } = user;
-
-    return NextResponse.json({
-      user: userWithoutPassword,
-      token,
-      message: 'Login exitoso'
-    });
-
+    return response;
   } catch (error) {
     console.error('Login error:', error);
-    return NextResponse.json(
-      { error: 'Error interno del servidor' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Error interno del servidor' }, { status: 500 });
   }
 }
