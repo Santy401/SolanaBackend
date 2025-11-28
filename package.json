@@ -12,6 +12,7 @@
     "@prisma/client": "^6.0.0",
     "@tanstack/react-query": "^5.90.11",
     "bcryptjs": "^3.0.3",
+    "jose": "^6.1.2",
     "jsonwebtoken": "^9.0.2",
     "next": "16.0.3",
     "react": "19.2.0",
