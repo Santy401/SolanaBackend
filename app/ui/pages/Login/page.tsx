@@ -12,7 +12,7 @@ export default function Login() {
     const { email, setEmail, password, setPassword, isLoading, handleSubmit } = useLogin();
     
     return (
-        <div className="grid grid-cols-2 h-screen overflow-hidden">
+        <div className="grid grid-cols-2 h-screen overflow-hidden bg-white">
             <div className="flex flex-col pl-30 pr-30  flex flex-col justify-center">
                 <h1 className="text-4xl font-bold">Welcome back !</h1>
                 <p>Sign in to your account</p>
