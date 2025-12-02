@@ -4,7 +4,7 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --darkbg: #171717;
+  --darkbg: #0C0C0C;
 
   --bt-color: #5037ec;
   --bt-color-hover: #5037ec;
@@ -43,7 +43,7 @@
 
   --destructive: oklch(0.577 0.245 27.325);
 
-  --border: oklch(0.922 0 0);
+  --border: #2d2d2d;
 
   --input: oklch(0.922 0 0);
 
@@ -130,6 +130,7 @@
 
 body {
   background-color: var(--darkbg);
+  display: flex;
 }
 
 span {

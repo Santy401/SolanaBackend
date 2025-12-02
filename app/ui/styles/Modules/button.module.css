@@ -3,3 +3,7 @@
 .loginButton {
     @apply bg-bt-color text-white p-3 rounded cursor-pointer mt-5 hover:bg-bt-color-hover transition-colors;
 }
+
+.OptionsTargetButtons {
+    @apply p-2 bg-[#2d2d2d] w-[90px] rounded cursor-pointer text-[14px]
+}
