@@ -5,9 +5,10 @@ import Sidebar from "@/app/ui/components/Navbar/Sidebar";
 import { useState } from "react";
 import Dashboard from "../Dashboard/page";
 import React from "react";
-import Breadcrumb from "./Breadcrumb"; 
+import Breadcrumb from "./Breadcrumb";
 import Clientes from "@/app/ui/components/Ventas/Clientes/pages";
 import { CreateClient } from "@/app/ui/components/Ventas/Clientes/create/page";
+import { Client } from "@/domain/entities/Client.entity";
 
 export default function RootLayout({
   children,
@@ -15,6 +16,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const [currentView, setCurrentView] = useState('inicio');
+  const [selectedClient, setSelectedClient] = useState<Client | null>(null);
 
   const renderContent = () => {
     switch (currentView) {
@@ -29,9 +31,10 @@ export default function RootLayout({
       case 'ventas-remisiones':
         return <div className="text-white p-8">Remisiones</div>;
       case 'ventas-clientes':
-        return <Clientes onSelect={setCurrentView} />;
+        return <Clientes onSelect={setCurrentView} onSelectClient={setSelectedClient} />;
       case 'ventas-clientes-create':
-        return <CreateClient onBack={() => setCurrentView('ventas-clientes')} />;
+        return <CreateClient onBack={() => setCurrentView('ventas-clientes')} initialData={selectedClient || undefined}
+          mode={selectedClient ? 'edit' : 'create'} />;
       case 'ventas-productos':
         return <div className="text-white p-8">Productos De Venta</div>;
       case 'vendedores':
