@@ -39,7 +39,7 @@ export interface Client {
   it_branches: boolean;
   observations?: string | null;
   
-  bills: any[];
+  bills: [];
   
   createdAt: Date;
   updatedAt: Date;
