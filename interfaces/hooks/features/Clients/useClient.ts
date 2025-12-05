@@ -1,4 +1,3 @@
-// hooks/useClients.ts
 import { useState, useEffect } from 'react';
 import { Client } from '@/domain/entities/Client.entity';
 
