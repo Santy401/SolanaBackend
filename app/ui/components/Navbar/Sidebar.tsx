@@ -58,7 +58,7 @@ export default function Sidebar({ onSelect }: SidebarProps) {
         { id: "ventas-remisiones", label: "Remisiones", icon: null },
         { id: "ventas-clientes", label: "Clientes", icon: null },
         { id: "ventas-productos", label: "Productos De Venta", icon: null },
-        { id: "vendedores", label: "Vendedores", icon: null },
+        { id: "ventas-vendedor", label: "Vendedores", icon: null },
       ],
     },
     { id: "notifications", label: "Notifications", icon: <Bell size={20} />, badge: "9+" },
@@ -121,7 +121,7 @@ export default function Sidebar({ onSelect }: SidebarProps) {
                 "w-full flex items-center justify-between gap-3 px-4 py-3 rounded-lg transition-all duration-200 group",
                 isExpanded ? "px-4" : "px-2 justify-center",
                 activeItem === item.id
-                  ? "bg-ring text-purple-400 shadow-lg shadow-purple-500/10"
+                  ? "bg-ring text-purple-200 shadow-lg shadow-purple-500/10"
                   : "hover:bg-forground text-foreground-text hover:text-purple-400",
               )}
               title={!isExpanded ? item.label : undefined}
@@ -183,7 +183,7 @@ export default function Sidebar({ onSelect }: SidebarProps) {
       <div className={cn("border-t relative border-sidebar-border space-y-1", isExpanded ? "p-3" : "p-2")}>
         <button
           className={cn(
-            "flex items-center gap-3 rounded-lg hover:bg-slate-800/50 text-slate-400 hover:text-slate-300 transition-all duration-200 group",
+            "flex items-center gap-3 rounded-lg hover:bg-slate-800/50 text-foreground-text hover:text-slate-300 transition-all duration-200 group",
             isExpanded ? "w-full px-4 py-3" : "w-full px-2 py-3 justify-center",
           )}
           title={!isExpanded ? "Support" : undefined}
@@ -193,7 +193,7 @@ export default function Sidebar({ onSelect }: SidebarProps) {
         </button>
         <button
           className={cn(
-            "flex items-center gap-3 rounded-lg hover:bg-slate-800/50 text-slate-400 z-10 hover:text-slate-300 transition-all duration-200 group",
+            "flex items-center gap-3 rounded-lg hover:bg-slate-800/50 text-foreground-text z-10 hover:text-slate-300 transition-all duration-200 group",
             isExpanded ? "w-full px-4 py-3" : "w-full px-2 py-3 justify-center",
           )}
           title={!isExpanded ? "Settings" : undefined}

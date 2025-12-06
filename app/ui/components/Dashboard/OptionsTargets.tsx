@@ -30,9 +30,9 @@ interface OptionCardProps {
 
 const OptionCard = ({ title, icon: Icon, onView, onCreate }: OptionCardProps) => {
     return (
-        <div className="flex flex-col bg-[#171717] justify-center items-center border border-[#2d2d2d] p-10 text-white m-2 rounded-2xl hover:bg-[#1d1d1d] hover:scale-105 transition-all duration-300 ease-in-out">
+        <div className="flex flex-col justify-center items-center border border-sidebar-border p-10 text-white m-2 rounded-2xl hover:scale-102 transition-all duration-200 ease-in-out">
             <Icon className="w-10 h-10 mb-3 text-purple-400" />
-            <span className="text-[15px] font-semibold mb-4">{title}</span>
+            <span className="text-[15px] font-semibold text-secondary-foreground mb-4">{title}</span>
             <div className="flex gap-3 mt-2">
                 <button
                     onClick={onView}
