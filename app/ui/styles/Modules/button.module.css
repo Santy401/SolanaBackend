@@ -5,5 +5,5 @@
 }
 
 .OptionsTargetButtons {
-    @apply p-2 bg-[#2d2d2d] w-[90px] rounded cursor-pointer text-[14px]
+    @apply p-2 bg-card w-[90px] rounded cursor-pointer text-secondary-foreground text-[14px] border border-sidebar-border
 }
