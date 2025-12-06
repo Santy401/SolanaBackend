@@ -92,6 +92,12 @@ model Client {
   updatedAt DateTime @updatedAt
 }
 
+model Seller {
+  id Int @id @default(autoincrement())
+  name  String
+  Lastname  String
+}
+
 model Product {
   id    Int    @id @default(autoincrement())
   name  String
