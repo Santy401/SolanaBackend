@@ -13,7 +13,6 @@ import {
   Vault,
   Wallet,
   AlertCircle,
-  Settings,
   Search,
   ChevronDown,
   ChevronRight,
@@ -21,6 +20,7 @@ import {
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { ThemeToggle } from "../../cn/components/ui/ThemeToggle"
+import { ProfileDropdown } from "../../cn/components/ui/dropdown-profile"
 
 interface NavItem {
   id: string
@@ -37,7 +37,7 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ onSelect }: SidebarProps) {
-  const [expandedItems, setExpandedItems] = useState<string[]>(["ventas"]) 
+  const [expandedItems, setExpandedItems] = useState<string[]>(["ventas"])
   const [activeItem, setActiveItem] = useState("inicio")
   const [isExpanded, setIsExpanded] = useState(true)
 
@@ -161,8 +161,8 @@ export default function Sidebar({ onSelect }: SidebarProps) {
                   <button
                     key={subitem.id}
                     onClick={() => {
-                      setActiveItem(subitem.id) 
-                      onSelect?.(subitem.id) 
+                      setActiveItem(subitem.id)
+                      onSelect?.(subitem.id)
                     }}
                     className={cn(
                       "w-full flex items-center gap-2 px-3 py-2 hover:bg-purple-400 text-[13px] cursor pointer rounded-lg transition-all duration-200",
@@ -191,16 +191,7 @@ export default function Sidebar({ onSelect }: SidebarProps) {
           <AlertCircle size={20} className="flex-shrink-0 group-hover:text-purple-400/60" />
           {isExpanded && <span className="text-sm font-medium">Support</span>}
         </button>
-        <button
-          className={cn(
-            "flex items-center gap-3 rounded-lg hover:bg-slate-800/50 text-foreground-text z-10 hover:text-slate-300 transition-all duration-200 group",
-            isExpanded ? "w-full px-4 py-3" : "w-full px-2 py-3 justify-center",
-          )}
-          title={!isExpanded ? "Settings" : undefined}
-        >
-          <Settings size={20} className="flex-shrink-0 group-hover:text-purple-400/60" />
-          {isExpanded && <span className="text-sm font-medium">Settings</span>}
-        </button>
+        <ProfileDropdown isExpanded={isExpanded} />
         {isExpanded && <div><ThemeToggle /></div>}
       </div>
     </div>

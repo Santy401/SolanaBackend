@@ -1,14 +1,15 @@
-'use client';
+"use client"
 
-import Image from "next/image";
-import styles from "../../styles/Modules/input.module.css";
-import buttonStyles from "../../styles/Modules/button.module.css";
-import dividerStyles from "../../styles/Modules/divider.module.css";
-import Link from "next/link";
-import { useState, FormEvent } from "react";
-import { useRegister } from "@/interfaces/hooks/features/auth/use-register";
+import type React from "react"
+
+import { useState } from "react"
+import { Eye, EyeOff, Zap, ArrowRight } from "lucide-react"
+import { Button } from "@/app/ui/cn/components/ui/button"
+import { useRegister } from "@/interfaces/hooks/features/auth/use-register"
+import Link from "next/link"
 
 export default function Register() {
+    const [showPassword, setShowPassword] = useState(false)
     const [formData, setFormData] = useState({
         email: '',
         emailConfirm: '',
@@ -17,15 +18,14 @@ export default function Register() {
         countryCode: '+57',
         password: '',
         confirmPassword: '',
-        typeAccount: 'peopleNatural',
         acceptTerms: false,
         acceptPrivacy: false
     });
-
     const [error, setError] = useState('');
+
     const { mutate: register, isPending } = useRegister();
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         setError('');
 
@@ -56,209 +56,189 @@ export default function Register() {
     };
 
     return (
-        <div className="grid grid-cols-2 h-screen overflow-hidden">
-            <div className="flex flex-col pl-30 pr-30 overflow-y-auto">
-
-                <div className="flex-1 min-h-[10vh]"></div>
-
-                <div className="flex flex-col justify-center py-8">
-                    <div className="text-left mb-8">
-                        <h1 className="text-4xl font-bold">Create an account</h1>
-                        <p className="text-gray-600 mt-2">Enter your details to sign up</p>
+        <div className="min-h-screen w-full flex items-center justify-center bg-background p-4">
+            <div className="w-full max-w-md bg-form-bg rounded-lg shadow-sm p-8 max-h-[90vh] overflow-y-auto">
+                {/* Header with icon */}
+                <div className="flex flex-col items-center mb-6">
+                    <div className="bg-foreground text-background rounded-lg p-3 mb-4">
+                        <Zap size={24} />
                     </div>
-
-                    {error && (
-                        <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
-                            {error}
-                        </div>
-                    )}
-
-                    <form onSubmit={handleSubmit} className="flex flex-col space-y-6">
-
-                        <div>
-                            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                                Email <span className="text-red-500 font-bold text-[18px]">*</span>
-                            </label>
-                            <input
-                                type="email"
-                                id="email"
-                                placeholder="Enter your email"
-                                className={styles.input}
-                                value={formData.email}
-                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                required
-                            />
-                        </div>
-
-                        <div>
-                            <label htmlFor="emailConfirm" className="block text-sm font-medium text-gray-700 mb-1">
-                                Confirm Email <span className="text-red-500 font-bold text-[18px]">*</span>
-                            </label>
-                            <input
-                                type="email"
-                                id="emailConfirm"
-                                placeholder="Confirm your email"
-                                className={styles.input}
-                                value={formData.emailConfirm}
-                                onChange={(e) => setFormData({ ...formData, emailConfirm: e.target.value })}
-                                required
-                            />
-                        </div>
-
-                        <div>
-                            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                                Full Name <span className="text-red-500 font-bold text-[18px]">*</span>
-                            </label>
-                            <input
-                                type="text"
-                                id="name"
-                                placeholder="Enter your full name"
-                                className={styles.input}
-                                value={formData.name}
-                                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                required
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-                                Phone Number <span className="text-red-500 font-bold text-[18px]">*</span>
-                            </label>
-                            <div className="flex">
-                                <div className="relative">
-                                    <select
-                                        id="countryCode"
-                                        className="h-full border border-r-0 border-gray-300 rounded-l-lg px-3 py-2 bg-gray-50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none"
-                                        value={formData.countryCode}
-                                        onChange={(e) => setFormData({ ...formData, countryCode: e.target.value })}
-                                    >
-                                        <option value="+57">🇨🇴 +57</option>
-                                        <option value="+1">🇺🇸 +1</option>
-                                        <option value="+52">🇲🇽 +52</option>
-                                        <option value="+51">🇵🇪 +51</option>
-                                        <option value="+56">🇨🇱 +56</option>
-                                        <option value="+54">🇦🇷 +54</option>
-                                        <option value="+55">🇧🇷 +55</option>
-                                        <option value="+34">🇪🇸 +34</option>
-                                        <option value="+44">🇬🇧 +44</option>
-                                        <option value="+49">🇩🇪 +49</option>
-                                        <option value="+33">🇫🇷 +33</option>
-                                        <option value="+39">🇮🇹 +39</option>
-                                    </select>
-                                </div>
-                                <input
-                                    type="tel"
-                                    id="phone"
-                                    placeholder="300 123 4567"
-                                    className={`${styles.input} flex-1 rounded-l-none border-l-0`}
-                                    value={formData.phone}
-                                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                                    required
-                                />
-                            </div>
-                        </div>
-
-                        <div>
-                            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-                                Password <span className="text-red-500 font-bold text-[18px]">*</span>
-                            </label>
-                            <input
-                                type="password"
-                                id="password"
-                                placeholder="Create a password"
-                                className={styles.input}
-                                value={formData.password}
-                                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                                required
-                            />
-                        </div>
-
-                        <div>
-                            <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">
-                                Confirm Password <span className="text-red-500 font-bold text-[18px]">*</span>
-                            </label>
-                            <input
-                                type="password"
-                                id="confirmPassword"
-                                placeholder="Confirm your password"
-                                className={styles.input}
-                                value={formData.confirmPassword}
-                                onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-                                required
-                            />
-                        </div>
-
-                        <div>
-                            <label htmlFor="typeAccount" className="block text-sm font-medium text-gray-700 mb-1">
-                                Account Type <span className="text-red-500 font-bold text-[18px]">*</span>
-                            </label>
-                            <div className="relative">
-                                <select
-                                    id="typeAccount"
-                                    className="h-full border border-gray-300 rounded-lg px-3 py-2 bg-gray-50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none w-full"
-                                    value={formData.typeAccount}
-                                    onChange={(e) => setFormData({ ...formData, typeAccount: e.target.value })}
-                                >
-                                    <option value="peopleNatural">People Natural</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div className="flex flex-col gap-3">
-                            <div className="flex gap-1">
-                                <input
-                                    type="checkbox"
-                                    id="acceptTerms"
-                                    checked={formData.acceptTerms}
-                                    onChange={(e) => setFormData({ ...formData, acceptTerms: e.target.checked })}
-                                />
-                                <label htmlFor="acceptTerms">I accept the particular Terms of Use</label>
-                            </div>
-                            <div className="flex gap-1">
-                                <input
-                                    type="checkbox"
-                                    id="acceptPrivacy"
-                                    checked={formData.acceptPrivacy}
-                                    onChange={(e) => setFormData({ ...formData, acceptPrivacy: e.target.checked })}
-                                />
-                                <label htmlFor="acceptPrivacy">I accept the Privacy Policy</label>
-                            </div>
-                        </div>
-
-                        <button
-                            type="submit"
-                            className={`${buttonStyles.loginButton} mt-4`}
-                            disabled={isPending}
-                        >
-                            {isPending ? 'Creating Account...' : 'Create Account Free'}
-                        </button>
-                    </form>
-
-                    <div className={dividerStyles.dividerLogin + " my-6"}></div>
-
-                    <p className="text-center text-gray-600">
-                        Already have an account?{" "}
-                        <Link
-                            href="/ui/pages/Login"
-                            className="text-bt-color underline hover:text-bt-color-dark transition-colors"
-                        >
-                            Login here
-                        </Link>
-                    </p>
+                    <h1 className="text-3xl font-semibold text-foreground mb-2">Crear Cuenta</h1>
+                    <p className="text-center text-muted-foreground">Ingresa tus datos para registrarte.</p>
                 </div>
 
-                <div className="flex-1 min-h-[10vh]"></div>
-            </div>
+                {error && (
+                    <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-600 rounded-lg text-sm">
+                        {error}
+                    </div>
+                )}
 
-            <div className="relative h-screen w-full overflow-hidden">
-                <Image
-                    src="/Login/Login.jpeg"
-                    fill
-                    className="object-cover"
-                    alt="Register"
-                    priority
-                />
-                <div className="absolute inset-0 bg-black/10"></div>
+                {/* Form */}
+                <form onSubmit={handleSubmit} className="space-y-4">
+                    {/* Name field */}
+                    <div>
+                        <label htmlFor="name" className="block text-sm font-medium text-foreground-text mb-1">
+                            Nombre Completo <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                            id="name"
+                            type="text"
+                            placeholder="Juan Pérez"
+                            value={formData.name}
+                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                            className="w-full px-4 py-2 rounded-lg bg-form-input-bg text-foreground-text-second placeholder-muted-foreground border border-transparent focus:outline-none focus:border-neutral-300 transition"
+                            required
+                        />
+                    </div>
+
+                    {/* Email fields */}
+                    <div className="grid grid-cols-1 gap-4">
+                        <div>
+                            <label htmlFor="email" className="block text-sm font-medium text-foreground-text mb-1">
+                                Correo Electrónico <span className="text-red-500">*</span>
+                            </label>
+                            <input
+                                id="email"
+                                type="email"
+                                placeholder="correo@dominio.com"
+                                value={formData.email}
+                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                className="w-full px-4 py-2 rounded-lg bg-form-input-bg text-foreground-text-second placeholder-muted-foreground border border-transparent focus:outline-none focus:border-neutral-300 transition"
+                                required
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="emailConfirm" className="block text-sm font-medium text-foreground-text mb-1">
+                                Confirmar Correo <span className="text-red-500">*</span>
+                            </label>
+                            <input
+                                id="emailConfirm"
+                                type="email"
+                                placeholder="Confirmar correo"
+                                value={formData.emailConfirm}
+                                onChange={(e) => setFormData({ ...formData, emailConfirm: e.target.value })}
+                                className="w-full px-4 py-2 rounded-lg bg-form-input-bg text-foreground-text-second placeholder-muted-foreground border border-transparent focus:outline-none focus:border-neutral-300 transition"
+                                required
+                            />
+                        </div>
+                    </div>
+
+                    {/* Phone field */}
+                    <div>
+                        <label htmlFor="phone" className="block text-sm font-medium text-foreground-text mb-1">
+                            Número de Teléfono <span className="text-red-500">*</span>
+                        </label>
+                        <div className="flex gap-2">
+                            <select
+                                className="px-2 py-2 rounded-lg bg-form-input-bg text-foreground-text-second border border-transparent focus:outline-none focus:border-neutral-300"
+                                value={formData.countryCode}
+                                onChange={(e) => setFormData({ ...formData, countryCode: e.target.value })}
+                            >
+                                <option value="+57">🇨🇴 +57</option>
+                                <option value="+1">🇺🇸 +1</option>
+                                <option value="+52">🇲🇽 +52</option>
+                                <option value="+34">🇪🇸 +34</option>
+                            </select>
+                            <input
+                                id="phone"
+                                type="tel"
+                                placeholder="300 123 4567"
+                                value={formData.phone}
+                                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                                className="flex-1 px-4 py-2 rounded-lg bg-form-input-bg text-foreground-text-second placeholder-muted-foreground border border-transparent focus:outline-none focus:border-neutral-300 transition"
+                                required
+                            />
+                        </div>
+                    </div>
+
+                    {/* Password fields */}
+                    <div className="grid grid-cols-1 gap-4">
+                        <div>
+                            <label htmlFor="password" className="block text-sm font-medium text-foreground-text mb-1">
+                                Contraseña <span className="text-red-500">*</span>
+                            </label>
+                            <div className="relative">
+                                <input
+                                    id="password"
+                                    type={showPassword ? "text" : "password"}
+                                    placeholder="Crear contraseña"
+                                    value={formData.password}
+                                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                                    className="w-full px-4 py-2 rounded-lg bg-form-input-bg text-foreground-text-second placeholder-muted-foreground border border-transparent focus:outline-none focus:border-neutral-300 transition"
+                                    required
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition"
+                                >
+                                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                </button>
+                            </div>
+                        </div>
+                        <div>
+                            <label htmlFor="confirmPassword" className="block text-sm font-medium text-foreground-text mb-1">
+                                Confirmar Contraseña <span className="text-red-500">*</span>
+                            </label>
+                            <input
+                                id="confirmPassword"
+                                type="password"
+                                placeholder="Confirmar contraseña"
+                                value={formData.confirmPassword}
+                                onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+                                className="w-full px-4 py-2 rounded-lg bg-form-input-bg text-foreground-text-second placeholder-muted-foreground border border-transparent focus:outline-none focus:border-neutral-300 transition"
+                                required
+                            />
+                        </div>
+                    </div>
+
+                    {/* Terms */}
+                    <div className="space-y-2 text-sm">
+                        <div className="flex items-center gap-2">
+                            <input
+                                type="checkbox"
+                                id="acceptTerms"
+                                checked={formData.acceptTerms}
+                                onChange={(e) => setFormData({ ...formData, acceptTerms: e.target.checked })}
+                                className="rounded border-gray-300"
+                            />
+                            <label htmlFor="acceptTerms" className="text-muted-foreground">
+                                Acepto los Términos de Uso
+                            </label>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <input
+                                type="checkbox"
+                                id="acceptPrivacy"
+                                checked={formData.acceptPrivacy}
+                                onChange={(e) => setFormData({ ...formData, acceptPrivacy: e.target.checked })}
+                                className="rounded border-gray-300"
+                            />
+                            <label htmlFor="acceptPrivacy" className="text-muted-foreground">
+                                Acepto la Política de Privacidad
+                            </label>
+                        </div>
+                    </div>
+
+                    {/* Submit button */}
+                    <Button
+                        type="submit"
+                        className="w-full bg-foreground text-background hover:bg-neutral-900 py-3 rounded-lg font-medium flex items-center justify-center gap-2 transition"
+                        disabled={isPending}
+                    >
+                        {isPending ? 'Creando cuenta...' : 'Crear Cuenta'}
+                        {!isPending && <ArrowRight size={18} />}
+                    </Button>
+                </form>
+
+                {/* Login link */}
+                <p className="text-center text-muted-foreground text-sm mt-6">
+                    ¿Ya tienes una cuenta?{" "}
+                    <Link href="/ui/pages/Login" className="text-blue-400 font-medium hover:underline">
+                        Inicia sesión aquí
+                    </Link>
+                </p>
             </div>
         </div>
-    );
+    )
 }

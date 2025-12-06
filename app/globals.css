@@ -4,7 +4,7 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --darkbg: #0C0C0C;
+  --darkbg: #696969;
   --bt-color: #5037ec;
   --bt-color-hover: #5037ec;
   --input-color: #fff;
@@ -30,6 +30,7 @@
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
   --border: #2d2d2d;
+  --form-input-bg: #262626;
   --input: oklch(0.922 0 0);
   --ring: oklch(43.29% 0.2347 297.309 / 0.863);
   --chart-1: oklch(0.646 0.222 41.116);
@@ -45,6 +46,9 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: #ddd;
   --sidebar-ring: oklch(0.708 0 0);
+
+  --form-bg: #171717;
+  --form-input-bg: #fffff;
 }
 
 @theme inline {
@@ -97,6 +101,10 @@
   --color-foreground-text: var(--foreground-text);
   --color-foreground-text-second: var(--foreground-text-second);
   --color-foreground-bg-bar: var(--foreground-text-select);
+
+  --color-darkbg: var(--darkbg);
+  --color-form-bg: var(--form-bg);
+  --color-form-input-bg: var(--form-input-bg);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -108,7 +116,7 @@
 }
 
 .dark {
-  --darkbg: #0C0C0C;
+  --darkbg: #0A0A0A;
   --background: #0C0C0C;
   --foreground: oklch(0.985 0 0);
   --foreground-text: #c1c1c1;
@@ -142,6 +150,8 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: #2d2d2d;
   --sidebar-ring: oklch(0.556 0 0);
+
+  --form-input-bg: #262626;
 }
 
 body {
