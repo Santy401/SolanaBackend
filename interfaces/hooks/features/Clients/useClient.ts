@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Client } from '@/domain/entities/Client.entity';
+import { Client, CreateClientDto } from '@/domain/entities/Client.entity';
 
 export function useClients() {
   const [clients, setClients] = useState<Client[]>([]);
@@ -80,7 +80,7 @@ export function useClients() {
     }
   };
 
-  const createClient = async (data: Omit<Client, 'id' | 'createdAt' | 'updatedAt'>) => {
+  const createClient = async (data: CreateClientDto) => {
     try {
       const response = await fetch('/api/clients', {
         method: 'POST',

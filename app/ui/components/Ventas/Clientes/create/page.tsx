@@ -21,7 +21,7 @@ interface CreateClientProps {
 
 type ClientFormData = Omit<CreateClientDto, 'id' | 'createdAt' | 'updatedAt' | 'bills'>;
 
-export function CreateClient({ onBack, initialData, mode = 'create' }: CreateClientProps) {
+export default function CreateClient({ onBack, initialData, mode = 'create' }: CreateClientProps) {
   const [opcionesOpen, setOpcionesOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -46,7 +46,7 @@ export function CreateClient({ onBack, initialData, mode = 'create' }: CreateCli
     postalCode: undefined,
     address: undefined,
     is_supplier: false,
-    it_branches: false, 
+    it_branches: false,
     observations: undefined,
     ...initialData,
   });

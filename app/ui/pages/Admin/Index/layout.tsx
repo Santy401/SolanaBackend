@@ -7,10 +7,10 @@ import Dashboard from "../Dashboard/page";
 import React from "react";
 import Breadcrumb from "./Breadcrumb";
 import Clientes from "@/app/ui/components/Ventas/Clientes/pages";
-import { CreateClient } from "@/app/ui/components/Ventas/Clientes/create/page";
+import CreateClient from "@/app/ui/components/Ventas/Clientes/create/page";
 
 import { Client } from "@/domain/entities/Client.entity";
-import { Vendedores } from "@/app/ui/components/Ventas/Vendedor/page"
+import Vendedores from "@/app/ui/components/Ventas/Vendedor/page"
 
 export default function RootLayout({
   children,
