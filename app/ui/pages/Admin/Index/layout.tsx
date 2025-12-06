@@ -8,7 +8,9 @@ import React from "react";
 import Breadcrumb from "./Breadcrumb";
 import Clientes from "@/app/ui/components/Ventas/Clientes/pages";
 import { CreateClient } from "@/app/ui/components/Ventas/Clientes/create/page";
+
 import { Client } from "@/domain/entities/Client.entity";
+import { Vendedores } from "@/app/ui/components/Ventas/Vendedor/page"
 
 export default function RootLayout({
   children,
@@ -37,8 +39,8 @@ export default function RootLayout({
           mode={selectedClient ? 'edit' : 'create'} />;
       case 'ventas-productos':
         return <div className="text-white p-8">Productos De Venta</div>;
-      case 'vendedores':
-        return <div>Vendedores</div>;
+      case 'ventas-vendedor':
+        return <Vendedores />;
       default:
         return <div className="text-white p-8">Selecciona una opción del menú</div>;
     }

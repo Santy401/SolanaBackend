@@ -1,4 +1,3 @@
-// app/layout/Breadcrumb.tsx
 "use client";
 
 import { ChevronRight } from "lucide-react";
@@ -13,19 +12,18 @@ const SIDEBAR_ITEMS = [
     { id: "ventas-remisiones", label: "Remisiones", parentId: "ventas" },
     { id: "ventas-clientes", label: "Clientes", parentId: "ventas" },
     { id: "ventas-clientes-create", label: "Crear Cliente", parentId: "ventas-clientes" },
-     { id: "ventas-clientes-create", label: "Crear Cliente", parentId: "ventas-clientes" },
+    { id: "ventas-clientes-create", label: "Crear Cliente", parentId: "ventas-clientes" },
     { id: "ventas-productos", label: "Productos De Venta", parentId: "ventas" },
-    // ... otros items
+    { id: "ventas-vendedor", label: "Vendedores", parentId: "ventas" }
 ];
 
 interface BreadcrumbProps {
-    activeItem?: string; // Hacerlo opcional para que pueda usar usePathname
+    activeItem?: string;
 }
 
 export default function Breadcrumb({ activeItem }: BreadcrumbProps) {
     const pathname = usePathname();
     
-    // Si no se pasa activeItem, lo detecta de la URL
     const detectedItem = !activeItem ? detectActiveItem(pathname) : activeItem;
     const currentItem = SIDEBAR_ITEMS.find(item => item.id === detectedItem);
 
@@ -37,17 +35,16 @@ export default function Breadcrumb({ activeItem }: BreadcrumbProps) {
         );
     }
 
-    // Construir la cadena de breadcrumb
     const breadcrumbItems = getBreadcrumbChain(currentItem);
 
     return (
         <div className="text-gray-400 flex items-center flex-wrap gap-1">
-            <span className="text-white font-medium">Simplapp</span>
+            <span className="text-foreground font-medium">Simplapp</span>
             
             {breadcrumbItems.map((item, index) => (
                 <div key={item.id} className="flex items-center">
                     <ChevronRight width={16} height={16} className="mx-1 text-gray-500" />
-                    <span className={`${index === breadcrumbItems.length - 1 ? 'text-white font-medium' : 'text-gray-400'}`}>
+                    <span className={`${index === breadcrumbItems.length - 1 ? 'text-foreground-text-second font-medium' : 'text-gray-400'}`}>
                         {item.label}
                     </span>
                 </div>
@@ -61,6 +58,7 @@ function detectActiveItem(pathname: string): string {
     
     if (path.includes('/ventas/clientes/create')) return 'ventas-clientes-create';
     if (path.includes('/ventas/clientes')) return 'ventas-clientes';
+    if (path.includes('/ventas/Vendedores')) return 'ventas-vendedor'
     if (path.includes('/ventas/cotizaciones')) return 'ventas-cotizaciones';
     if (path.includes('/ventas/remisiones')) return 'ventas-remisiones';
     if (path.includes('/ventas/venta')) return 'ventas-venta';
