@@ -29,6 +29,14 @@ function validateEnv() {
         );
     }
 
+    if (!process.env.JWT_REFRESH_SECRET) {
+        errors.push(
+            '❌ JWT_REFRESH_SECRET no está configurado.\n' +
+            '   Genera uno seguro con: openssl rand -base64 32\n' +
+            '   Agrégalo a tu archivo .env'
+        );
+    }
+
     if (!process.env.DATABASE_URL) {
         errors.push(
             '❌ DATABASE_URL no está configurado.\n' +
@@ -59,6 +67,7 @@ validateEnv();
 
 export const env = {
     JWT_SECRET: process.env.JWT_SECRET as string,
+    JWT_REFRESH_SECRET: process.env.JWT_REFRESH_SECRET as string,
     DATABASE_URL: process.env.DATABASE_URL as string,
     DIRECT_URL: process.env.DIRECT_URL,
     NODE_ENV: process.env.NODE_ENV || 'development',
